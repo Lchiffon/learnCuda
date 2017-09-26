@@ -1,10 +1,9 @@
 # include <stdio.h>
 # include <stdlib.h>
-# include <conio.h>
 
 /*核函数*/
 
-__globa__ void what_is_my_id(unsigned int * const block,
+__global__ void what_is_my_id(unsigned int * const block,
                                                    unsigned int * const thread,
                                                    unsigned int * const warp,
                                                    unsigned int * const calc_thread)
@@ -31,7 +30,7 @@ int main(void)
 {
     const unsigned int num_blocks = 2;
     const unsigned int num_threads = 64;
-    char ch;
+    // char ch='a';
 
     unsigned int * gpu_block;
     unsigned int * gpu_thread;
@@ -47,17 +46,17 @@ int main(void)
 
     /* 执行核函数 */
     what_is_my_id<<<num_blocks, num_threads>>>(gpu_block, gpu_thread, gpu_warp,
-                                               gpu_clacl_thread);
+                                               gpu_calc_thread);
 
     /*保存回CPU*/
-    cudaMemory(cpu_block, gpu_block, ARRAY_SIZE_IN_BYTES,
-               cudaMemoryDeviceToHost);
-    cudaMemory(cpu_block, gpu_thread, ARRAY_SIZE_IN_BYTES,
-               cudaMemoryDeviceToHost);
-    cudaMemory(cpu_block, gpu_warp, ARRAY_SIZE_IN_BYTES,
-               cudaMemoryDeviceToHost);
-    cudaMemory(cpu_block, gpu_calc_thread, ARRAY_SIZE_IN_BYTES,
-               cudaMemoryDeviceToHost);
+    cudaMemcpy(cpu_block, gpu_block, ARRAY_SIZE_IN_BYTES,
+               cudaMemcpyDeviceToHost);
+    cudaMemcpy(cpu_block, gpu_thread, ARRAY_SIZE_IN_BYTES,
+               cudaMemcpyDeviceToHost);
+    cudaMemcpy(cpu_block, gpu_warp, ARRAY_SIZE_IN_BYTES,
+               cudaMemcpyDeviceToHost);
+    cudaMemcpy(cpu_block, gpu_calc_thread, ARRAY_SIZE_IN_BYTES,
+               cudaMemcpyDeviceToHost);
 
     /*释放GPU*/
     cudaFree(gpu_block);
@@ -72,5 +71,5 @@ int main(void)
              cpu_clac_thread[i], cpu_block[i], cpu_warp[i], cpu_thread[i]);
     }
 
-    ch = getch()
+    //ch = getchar();
 }
