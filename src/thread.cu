@@ -68,7 +68,7 @@ int main(void)
     for (i=0; i < ARRAY_SIZE; i++)
     {
       printf("Calculated Thread: %3u - Block: %2u - Warp %2u -Thread %3u\n",
-             cpu_clac_thread[i], cpu_block[i], cpu_warp[i], cpu_thread[i]);
+             cpu_calc_thread[i], cpu_block[i], cpu_warp[i], cpu_thread[i]);
     }
 
     //ch = getchar();
